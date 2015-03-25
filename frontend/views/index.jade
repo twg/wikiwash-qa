@@ -1,8 +1,8 @@
 doctype html
-html(lang="en")
+html(ng-app="wikiwash", lang="en", ng-class="{'is-under': $root.showModal}")
   include ./partials/head
 
-  body(ng-app='wikiwash')
+  body(ng-class="{'is-under': $root.showModal}")
     include ./partials/analytics
 
     .content(app-view-segment="0")

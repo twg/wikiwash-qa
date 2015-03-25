@@ -1,10 +1,10 @@
-.about-popup.light(ng-show="showModal")
+.about-popup.light(ng-show="$root.showModal")
   .scroll-container
     .popup-header
       .title
         p Why Wikiwash?
       .close
-        a(href="" ng-click="showModal = !showModal") X
+        a(href="" ng-click="$root.showModal = !$root.showModal") X
     .content
       p <strong>WikiWash (Beta)</strong> is a free public tool that allows journalists, citizens and activists to uncover spin and bias on Wikipedia by tracking page edits in real time. The platform aims to make political and corporate spin on Wikipedia more visible and discoverable and promote accountability and transparency through crowdsourcing.
       p Pick a Wikipedia article to explore, and use WikiWash to:

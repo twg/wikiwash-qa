@@ -7,7 +7,7 @@
 
     .header-navigation
       .header-inner
-        a.header-about(href="",ng-click="showModal=!showModal",ng-class="{active: showModal}") About
+        a.header-about(href="",ng-click="$root.showModal=!$root.showModal",ng-class="{active: $root.showModal}") About
         .header-searchToggle.fa.fa-search(ng-click="searchingState = !searchingState")
 
     .header-search

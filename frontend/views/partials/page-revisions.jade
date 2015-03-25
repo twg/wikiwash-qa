@@ -63,6 +63,6 @@
         img.animated-infinite.zoomOutRight(src="/img/WIKIWASH-W1-Loading.png")
         img.animated-infinite.zoomOutLeft(src="/img/WIKIWASH-W2-Loading%402x.png")
 
-.overlay(ng-show="showModal" ng-click="showModal = !showModal")
+.overlay(ng-show="$root.showModal" ng-click="$root.showModal = !$root.showModal")
 
 include ./about-modal
