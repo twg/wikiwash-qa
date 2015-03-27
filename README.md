@@ -48,6 +48,26 @@ own machine, feel free to edit this README to update the above instructions.
 Found a problem with WikiWash? [Submit an issue](https://github.com/twg/wikiwash/issues/new)
 to let us know.
 
+Feel free to add as much detail a you can, including:
+
+- The observed behaviour
+- The expected behaviour
+- Environment details (device, operating system, browser, resolution, etc.)
+- Artifacts (screenshots, screencasts, error messages)
+
+You can also use `Labels` to categorize your issues.
+
+| Label            | Example                     | Meaning                                                       |
+|:-----------------|:----------------------------|:--------------------------------------------------------------|
+| Issue Type       | `t-bug`                     | The type of issue is being reported.                          |
+| Priority         | `p-critical`                | The issue's importance in relation to other issues. Higher                                                        priority is given to stability, or glaring user experience                                                                                                             issues.  |
+| Area             | `a-article page`            | The area of the app that is affected by this issue.           |
+| Browser/Device   | `b-firefox`, `b-mobile`     | The browser or device affected **uniquely** affected.         |
+| Additional Info  | `i-difficult to reproduce`  | Other details to help with reproducing/resolving.             |
+| Developer Effort | `e-challenging`             | Effort to resolve this isusue. To be used by developers only. |
+| Issue State      | `s-needs work`              | The current workflow state of the issue.                      |
+| Resolution       | `r-duplicate`               | If not fixed, why the issue was closed.                       |
+
 See something that you'd like to change? We're all ears! Please, feel free to
 [fork](https://github.com/twg/wikiwash/fork) WikiWash on Github and submit a
 pull request to merge changes back into the application.
