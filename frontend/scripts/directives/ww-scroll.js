@@ -1,5 +1,5 @@
 angular.module('wikiwash')
-  .directive('wwScroll', ['SmoothScroll', function(SmoothScroll) {
+  .directive('wwScroll', function(SmoothScroll) {
     return {
       link: function(scope, element, attr) {
         var prevEdit = null;
@@ -35,5 +35,5 @@ angular.module('wikiwash')
         });
       }
     };
-    
-  }]);
+  }
+);

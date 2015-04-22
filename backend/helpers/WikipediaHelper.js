@@ -2,6 +2,7 @@ var http = require('q-io/http');
 var Q = require('q');
 var _ = require('lodash');
 var fs = require('fs');
+
 var log = require('../config/log').createLoggerForFile(__filename);
 var config = require('../config/config');
 
@@ -10,11 +11,11 @@ var cacheSuffix = ".html";
 
 var endPoint = 'en.wikipedia.org';
 
-var queryPath = function (revisionId) {
+function queryPath(revisionId) {
   return "/w/api.php?action=parse&format=json&maxlag=5&oldid=" + revisionId;
-};
+}
 
-var getRevision = function (revisionId) {
+function getRevision(revisionId) {
   var options = {
     method: 'GET',
     host: endPoint,
@@ -35,6 +36,7 @@ var getRevision = function (revisionId) {
     return http.request(options).then(function(response) {
       if (response.status === 503) {
         log.warn("Received 503 from upstream. Pausing for " + pauseTime + " msec before retrying.");
+
         return Q.delay(pauseTime).then(function() {
           makeRequest(attemptNumber + 1);
         });
@@ -49,14 +51,15 @@ var getRevision = function (revisionId) {
   };
 
   return makeRequest();
-};
+}
 
-var getHTMLFromResponse = function(json) {
-  return JSON.parse(json)['parse']['text']['*'];
-};
+function getHTMLFromResponse(json) {
+  return JSON.parse(json).parse.text['*'];
+}
 
-var fetchAndCacheRevisionID = function(revisionID) {
+function fetchAndCacheRevisionID(revisionID) {
   var fetchStart = +new Date();
+
   return getRevision(revisionID).then(function(data) {
     //  Save our fetched result to the cache, but don't
     //  bother waiting for it to complete before continuing.
@@ -66,6 +69,7 @@ var fetchAndCacheRevisionID = function(revisionID) {
     data = getHTMLFromResponse(data);
 
     var saveStart = +new Date();
+
     cache.set(revisionID + cacheSuffix, data).then(function() {
       var saveEnd = +new Date();
       log.info("Saved revision " + revisionID + " to cache. (took " + (saveEnd - saveStart) + " msec)");
@@ -73,17 +77,18 @@ var fetchAndCacheRevisionID = function(revisionID) {
 
     return data;
   });
-};
+}
 
-
-module.exports.getAndCacheRevisions = function(revisionIDs) {
+function getAndCacheRevisions(revisionIDs) {
   //  Simultaneously fetch all of the revisions separately.
   //  This way, if any of the revisions are cached, we can
   //  grab those from the cache instantly and wait on the
   //  slower data from Wikipedia itself.
   return Q.all(_.map(revisionIDs, function(revisionID, i) {
     log.info("Fetching revision " + revisionID + " from cache...");
+
     var fetchStart = +new Date();
+    
     return cache.get(revisionID + cacheSuffix).then(function(reply) {
       if (reply) {
         var fetchEnd = +new Date();
@@ -94,14 +99,14 @@ module.exports.getAndCacheRevisions = function(revisionIDs) {
       }
     });
   }));
-};
+}
 
-
-var cacheQueue = [];
+var cacheQueue = [ ];
 var cacheQueueLimit = 1000;
 
-var processCacheQueue = function() {
+function processCacheQueue() {
   var revisionID = cacheQueue[0];
+
   if (revisionID) {
     cache.exists(revisionID + cacheSuffix).then(function(exists) {
       if (!exists) {
@@ -122,9 +127,9 @@ var processCacheQueue = function() {
   } else {
     log.info("Preemptive cache queue is empty. Stopping fetch.");
   }
-};
+}
 
-module.exports.preemptivelyCache = function(revisionIDs) {
+function preemptivelyCache(revisionIDs) {
   //  Simultaneously fetch all of the revisions separately.
   //  This way, if any of the revisions are cached, we can
   //  grab those from the cache instantly and wait on the
@@ -132,6 +137,7 @@ module.exports.preemptivelyCache = function(revisionIDs) {
   cache.isActive().then(function(isActive) {
     if (isActive) {
       var cacheQueueBeingProcessed = (cacheQueue.length > 0);
+      
       cacheQueue.push.apply(cacheQueue, revisionIDs);
       cacheQueue = cacheQueue.slice(0, cacheQueueLimit);
 
@@ -140,4 +146,9 @@ module.exports.preemptivelyCache = function(revisionIDs) {
       }
     }
   }).done();
+}
+
+module.exports = {
+  preemptivelyCache: preemptivelyCache,
+  getAndCacheRevisions: getAndCacheRevisions
 };

@@ -1,6 +1,6 @@
 {
   "name": "WikiWash",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Track whitewashing on Wikipedia.",
   "repository": "git@github.com:twg/wikiwash.git",
   "main": "backend/server.js",
@@ -15,6 +15,7 @@
     "bunyan": "^1.2.1",
     "caniuse-db": "^1.0.30000090",
     "chai": "^1.9.2",
+    "cheerio": "^0.18.0",
     "country-code-lookup": "0.0.2",
     "coveralls": "^2.11.2",
     "event-stream": "^3.1.7",

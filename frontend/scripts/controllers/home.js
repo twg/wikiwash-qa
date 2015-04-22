@@ -1,13 +1,14 @@
-angular.module('wikiwash').controller('HomeController', ['$scope', '$location', 'socketService', 'pageParser', 'suggestions',
+angular.module('wikiwash').controller('HomeController',
   function($scope, $location, socketService, pageParser, suggestions) {
     $scope.pageName = '';
-    $scope.revisions = [];
+    $scope.revisions = [ ];
 
     var urlEscapeCodeRegex = /[^0-9a-zA-Z]/g;
+
     $scope.suggestions = _.map(suggestions.data, function(suggestion) {
       return {
         url: suggestion[0],
-        title: decodeURIComponent(suggestion[0].replace(/_/g, ' ')),
+        title: suggestion[0].replace(/_/g, ' ')
       };
     });
 
@@ -20,5 +21,4 @@ angular.module('wikiwash').controller('HomeController', ['$scope', '$location', 
       socketService.cycling = false;
     }
   }
-
-]);
+);

@@ -1,25 +1,31 @@
-.header
-  .logo
-    a(href="/")
-      img(src="/img/WIKIWASH-Logo-Header%402x.png")
-  .navigation
-    .search
-      form(ng-submit="getNewPage()")
-        input.bar(type="text" ng-model="pageName")
-    p Show:
-    .removed
-      input(type="checkbox" name="removed" id="removed" ng-model="showRemoved")
-      label(for="removed") Removed
-    .added
-      input(type="checkbox" name="added" id="added" ng-model="showAdded")
-      label(for="added") Added
+.header-spacer
+.header-wrapper
+  .header(ng-class="{'is-searching': searchingState}")
+    .header-logo
+      a(href="/")
+        img(src="/img/WIKIWASH-Logo-Header%402x.png")
 
-    a.export-session(
-      href=""
-      ng-csv="sessionCsv()"
-      filename="wikiwash-session.csv") Export Session
+    .header-navigation
+      .header-inner
+        a.header-about(href="",ng-click="$root.showModal=!$root.showModal",ng-class="{active: $root.showModal}") About
+        .header-searchToggle.fa.fa-search(ng-click="searchingState = !searchingState")
 
-    a.export-session.about-button(
-      href=""
-      ng-click="showModal = !showModal"
-      ng-class="{active: showModal}") About
+    .header-search
+      .header-inner
+        form.header-searchField(ng-submit="getNewPage()")
+          input(type="text" id="search" name="search" ng-model="pageName")
+        .header-checkbox.checkbox--removed
+          input(type="checkbox" name="removed" id="removed" ng-model="showRemoved")
+          label(for="removed") Removed
+        .header-checkbox.checkbox--added
+          input(type="checkbox" name="added" id="added" ng-model="showAdded")
+          label(for="added") Added
+
+  .content_tabs
+    ul.tabs
+      li
+        a(href='#', ng-click="showHistory()",ng-class="{active: tab=='history'}").
+          History
+      li.last
+        a(href='#', ng-click="showArticle()",ng-class="{active: tab=='article'}").
+          Article

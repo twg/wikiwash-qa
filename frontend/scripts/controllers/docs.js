@@ -1,6 +1,5 @@
-angular.module('wikiwash').controller('DocsController', ['$scope', '$location', '$window', 'pageParser',
+angular.module('wikiwash').controller('DocsController',
   function($scope, $location, $window, pageParser) {
-    
     $scope.pageName = "";
 
     $scope.getPage = function () {
@@ -8,6 +7,5 @@ angular.module('wikiwash').controller('DocsController', ['$scope', '$location', 
       $location.path(page);
       $window.location.reload();
     };
-
   }
-]);
+);
