@@ -171,7 +171,7 @@ gulp.task('nodemon', function() {
     env: {
       NODE_ENV: 'development'
     },
-    nodeArgs: [ '--debug' ]
+    nodeArgs: [ '--inspect' ]
   })
     .on('change', [ 'backend' ])
     .on('restart', function() {
